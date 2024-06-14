@@ -1,10 +1,15 @@
 import Image from "next/image";
 import classes from "./page.module.css";
 import { getMeal } from "@/lib/meals";
+import { notFound } from "next/navigation";
 
 export default function MealDetail({ params }) {
   const meal = getMeal(params.mealSlug);
 
+  if (!meal) {
+    // 컴포넌트에서 가장 가까운 notFound 컴포넌트를 작동시키는 Nextjs 내장함수
+    notFound();
+  }
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
 
   return (
