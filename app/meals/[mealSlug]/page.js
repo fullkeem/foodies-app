@@ -3,6 +3,19 @@ import classes from "./page.module.css";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({ params }) {
+  const meal = getMeal(params.mealSlug);
+
+  if (!meal) {
+    // 컴포넌트에서 가장 가까운 notFound 컴포넌트를 작동시키는 Nextjs 내장함수
+    notFound();
+  }
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
+
 export default function MealDetail({ params }) {
   const meal = getMeal(params.mealSlug);
 
